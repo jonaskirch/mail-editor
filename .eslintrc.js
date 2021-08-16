@@ -25,7 +25,7 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
     'import/prefer-default-export': 'off',
-    "no-use-before-define": 'warn',
+    'no-use-before-define': 'warn',
     // '@typescript-eslint/explicit-function-return-type': [
     //   'error',
     //   {
@@ -44,6 +44,9 @@ module.exports = {
   settings: {
     'import/resolver': {
       typescript: {},
+      node: {
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+      },
     },
   },
 };

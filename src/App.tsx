@@ -1,7 +1,8 @@
 import React from 'react';
+import MailEditor from './components/MailEditor';
 
 function App() {
-  return <div>init</div>;
+  return <MailEditor />;
 }
 
 export default App;
