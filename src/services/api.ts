@@ -13,17 +13,28 @@ class Api {
     assunto: string,
     mensagem: string
   ) {
-    await this.axios.post('/api2', {
-      host_smtp: process.env.REACT_APP_SMTP_HOST,
-      senha_smtp: process.env.REACT_APP_SMTP_PASS,
-      usuario_smtp: process.env.REACT_APP_SMTP_USER,
-      output: 'json',
-      emailRemetente: process.env.REACT_APP_SMTP_USER,
-      nomeRemetente: 'Mail Teste',
-      emailDestino,
-      assunto,
-      mensagem,
-    });
+    const formData = new FormData();
+    formData.append('host_smtp', process.env.REACT_APP_SMTP_HOST);
+    formData.append('usuario_smtp', process.env.REACT_APP_SMTP_USER);
+    formData.append('senha_smtp', process.env.REACT_APP_SMTP_PASS);
+    formData.append('emailRemetente', 'jonaskirch9@gmail.com');
+    formData.append('nomeRemetente', 'Email Teste');
+    formData.append('emailDestino', emailDestino);
+    formData.append('assunto', assunto);
+    formData.append('mensagem', mensagem);
+    formData.append('output', 'json');
+    await this.axios.post('/api2', formData);
+    // await this.axios.post('/api2', {
+    //   host_smtp: process.env.REACT_APP_SMTP_HOST,
+    //   usuario_smtp: process.env.REACT_APP_SMTP_USER,
+    //   senha_smtp: process.env.REACT_APP_SMTP_PASS,
+    //   emailRemetente: process.env.REACT_APP_SMTP_USER,
+    //   nomeRemetente: 'Mail Teste',
+    //   emailDestino,
+    //   assunto,
+    //   mensagem,
+    //   output: 'json',
+    // });
   }
 }
 
