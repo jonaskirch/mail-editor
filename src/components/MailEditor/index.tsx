@@ -2,8 +2,7 @@ import React, { useRef } from 'react';
 import EmailEditor from 'react-email-editor';
 import Toolbar from '../Toolbar';
 import api from '../../services/api';
-
-// import { Container } from './styles';
+import mergeTags from './mergeTags';
 
 const MailEditor: React.FC = () => {
   const emailEditorRef = useRef(null);
@@ -16,8 +15,15 @@ const MailEditor: React.FC = () => {
       },
       {
         mergeTags: {
+          // 'cliente.nome': 'cliente teste',
+          // 'cliente.endereco': 'endereco teste',
+          // cliente: {
+          //   mergeTags: {
+          //     nome: 'cliente teste',
+          //     endereco: 'endereco teste',
+          //   },
+          // },
           testez: 'abcde',
-          'cliente.nome': 'cliente teste',
           // 'cobranca.documento': '456681',
           // cliente: {
           //   mergeTags: {
@@ -38,42 +44,7 @@ const MailEditor: React.FC = () => {
   }
 
   function onLoad() {
-    emailEditorRef.current.editor.setMergeTags({
-      testez: {
-        name: 'Teste qualquer',
-        value: '{{teste}}',
-      },
-      cliente: {
-        name: 'Cliente',
-        mergeTags: {
-          nome: {
-            name: 'Nome completo',
-            value: '{{cliente.nome}}',
-          },
-          endereco: {
-            name: 'Endereço completo',
-            value: '{{cliente.endereco}}',
-          },
-        },
-      },
-      cobranca: {
-        name: 'Cobrança',
-        mergeTags: {
-          documento: {
-            name: 'Documento',
-            value: '{{cobranca.documento}}',
-          },
-          valor: {
-            name: 'Valor',
-            value: '{{cobranca.valor}}',
-          },
-          vencimento: {
-            name: 'Vencimento',
-            value: '{{cobranca.vencimento}}',
-          },
-        },
-      },
-    });
+    emailEditorRef.current.editor.setMergeTags(mergeTags);
     const layout = localStorage.getItem('maileditor-layout');
     if (layout) {
       emailEditorRef.current.editor.loadDesign(JSON.parse(layout));
@@ -87,8 +58,11 @@ const MailEditor: React.FC = () => {
   }
 
   function onSendMail() {
-    api.sendMail('jonaskirch9@gmail.com', 'Assunto teste', 'Mensagem teste');
-    console.log('send mail');
+    emailEditorRef.current.editor.exportHtml((data: any) => {
+      const { design, html } = data;
+      api.sendMail('jonaskirch9@gmail.com', 'Assunto teste', html);
+      console.log('send mail');
+    });
   }
 
   return (
@@ -100,7 +74,11 @@ const MailEditor: React.FC = () => {
         onSendMail={onSendMail}
       />
 
-      <EmailEditor ref={emailEditorRef} onLoad={onLoad} />
+      <EmailEditor
+        options={{ locale: 'pt-BR' }}
+        ref={emailEditorRef}
+        onLoad={onLoad}
+      />
     </div>
   );
 };
