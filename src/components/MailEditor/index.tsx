@@ -3,6 +3,7 @@ import EmailEditor from 'react-email-editor';
 import Toolbar from '../Toolbar';
 import api from '../../services/api';
 import mergeTags from './mergeTags';
+import replaceMergeTags from './replaceMergeTags';
 
 const MailEditor: React.FC = () => {
   const emailEditorRef = useRef(null);
@@ -14,31 +15,7 @@ const MailEditor: React.FC = () => {
         console.log('exportHtml', html);
       },
       {
-        mergeTags: {
-          // 'cliente.nome': 'cliente teste',
-          // 'cliente.endereco': 'endereco teste',
-          // cliente: {
-          //   mergeTags: {
-          //     nome: 'cliente teste',
-          //     endereco: 'endereco teste',
-          //   },
-          // },
-          testez: 'abcde',
-          // 'cobranca.documento': '456681',
-          // cliente: {
-          //   mergeTags: {
-          //     nome: 'Cliente Teste',
-          //     // endereco: 'Endereço Teste',
-          //   },
-          // },
-          // cobranca: {
-          //   mergeTags: {
-          //     documento: '123',
-          //     valor: 10.0,
-          //     vencimento: '10/10/2021',
-          //   },
-          // },
-        },
+        mergeTags: replaceMergeTags,
       }
     );
   }
@@ -58,11 +35,16 @@ const MailEditor: React.FC = () => {
   }
 
   function onSendMail() {
-    emailEditorRef.current.editor.exportHtml((data: any) => {
-      const { design, html } = data;
-      api.sendMail('jonaskirch9@gmail.com', 'Assunto teste', html);
-      console.log('send mail');
-    });
+    emailEditorRef.current.editor.exportHtml(
+      (data: any) => {
+        const { design, html } = data;
+        api.sendMail('jonaskirch9@gmail.com', 'Assunto teste', html);
+        console.log('send mail');
+      },
+      {
+        mergeTags: replaceMergeTags,
+      }
+    );
   }
 
   return (

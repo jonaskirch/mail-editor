@@ -1,36 +1,18 @@
 export default {
-  testez: {
-    name: 'Teste qualquer',
-    value: '{{teste}}',
+  customer: {
+    name: 'Nome do cliente',
+    value: '{{cliente.nome}}',
   },
-  cliente: {
-    name: 'Cliente',
-    mergeTags: {
-      nome: {
-        name: 'Nome completo',
-        value: '{{cliente.nome}}',
-      },
-      endereco: {
-        name: 'Endereço completo',
-        value: '{{cliente.endereco}}',
-      },
-    },
+  document: {
+    name: 'Documento',
+    value: '{{cobranca.documento}}',
   },
-  cobranca: {
-    name: 'Cobrança',
-    mergeTags: {
-      documento: {
-        name: 'Documento',
-        value: '{{cobranca.documento}}',
-      },
-      valor: {
-        name: 'Valor',
-        value: '{{cobranca.valor}}',
-      },
-      vencimento: {
-        name: 'Vencimento',
-        value: '{{cobranca.vencimento}}',
-      },
-    },
+  amount: {
+    name: 'Valor',
+    value: '{{cobranca.valor}}',
+  },
+  dueDate: {
+    name: 'Vencimento',
+    value: '{{cobranca.vencimento}}',
   },
 };
